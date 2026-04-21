@@ -14,19 +14,18 @@ import CharitiesPage from './pages/CharitiesPage';
 
 import './styles/global.css';
 
-// Pages that should NOT show the top navbar (they have their own layout)
-const PAGES_WITHOUT_NAVBAR = ['/dashboard', '/admin'];
-
 function AppContent() {
   return (
     <>
-      {/* Navbar is shown on public pages; dashboard/admin have their own sidebar */}
+      {/* 1. Global Navbar Route */}
+      {/* Navbar is shown on public pages; dashboard/admin return null to hide it */}
       <Routes>
         <Route path="/dashboard/*" element={null} />
         <Route path="/admin/*" element={null} />
         <Route path="*" element={<Navbar />} />
       </Routes>
 
+      {/* 2. Main Page Routes */}
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
@@ -35,38 +34,27 @@ function AppContent() {
         {/* Auth routes — redirect if already logged in */}
         <Route path="/login" element={
           <PublicOnlyRoute>
-            <>
-              <Navbar />
-              <LoginPage />
-            </>
+            <LoginPage />
           </PublicOnlyRoute>
         } />
+        
         <Route path="/register" element={
           <PublicOnlyRoute>
-            <>
-              <Navbar />
-              <RegisterPage />
-            </>
+            <RegisterPage />
           </PublicOnlyRoute>
         } />
 
         {/* User dashboard — requires auth */}
         <Route path="/dashboard/*" element={
           <ProtectedRoute>
-            <>
-              <Navbar />
-              <DashboardPage />
-            </>
+            <DashboardPage />
           </ProtectedRoute>
         } />
 
         {/* Admin panel — requires auth + admin role */}
         <Route path="/admin/*" element={
           <AdminRoute>
-            <>
-              <Navbar />
-              <AdminPage />
-            </>
+            <AdminPage />
           </AdminRoute>
         } />
 
