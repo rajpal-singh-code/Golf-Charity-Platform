@@ -12,13 +12,12 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    // 'https://your-deployed-frontend-url.vercel.app' // Add your deployed frontend URL here later!
+    'https://golf-charity-platform-velh.vercel.app' 
   ],
   credentials: true,
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-
 
 // ── 2. Connect DB ─────────────────────────────────────────────────
 app.use(async (req, res, next) => {
@@ -30,12 +29,10 @@ app.use(async (req, res, next) => {
   }
 });
 
-
 // ── Health check ──────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'Golf Charity Draw API is running 🏌️' });
 });
-
 
 // ── Routes ────────────────────────────────────────────────────────
 app.use('/api/auth', require('./routes/auth'));
@@ -46,16 +43,13 @@ app.use('/api/charities', require('./routes/charities'));
 app.use('/api/winners', require('./routes/winners'));
 app.use('/api/admin', require('./routes/admin'));
 
-
 // ── 404 ───────────────────────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
 });
 
-
 // ── Error Handler ─────────────────────────────────────────────────
 app.use(errorHandler);
-
 
 // ── Start (local only — Vercel uses serverless) ───────────────────
 if (process.env.NODE_ENV !== 'production') {
