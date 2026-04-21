@@ -22,7 +22,7 @@ app.use(async (req, res, next) => {
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    process.env.CLIENT_URL,
+    'https://golf-charity-platform-kgb1.vercel.app',
   ],
   credentials: true,
 }));
